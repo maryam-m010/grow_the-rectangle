@@ -1,0 +1,38 @@
+import pygame, sys
+pygame.init()
+
+screen = pygame.display.set_mode((600,600))
+pygame.display.set_caption("grow the rectangle")
+screen.fill("pink")
+pygame.display.update()
+
+class Rect:
+    def __init__(self, screen, color, dimension):
+        self.rect_surf = screen
+        self.rect_color = color
+        self.rect_dimensions = dimension
+    def draw(self):
+        self.draw_rect = pygame.draw.rect(self.rect_surf, self.rect_color, self.rect_dimensions)
+    
+    def grow(self, r):
+        self.rect_dimensions[2:] = [x+r for x in self.rect_dimensions[2:]]
+        pygame.draw.rect(self.rect_surf, self.rect_color, self.rect_dimensions)
+
+rect1 = Rect(screen, "blue", [150, 150, 50, 100])
+rect1.draw()
+
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            sys.exit()
+
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            screen.fill("pink")
+            rect1.draw()
+            pygame.display.update()
+        
+        elif event.type == pygame.MOUSEBUTTONUP:
+            screen.fill("pink")
+            rect1.grow(50)
+            pygame.display.update()
+
